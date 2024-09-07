@@ -10,6 +10,8 @@ export interface PricingData {
   forType: string;
   monthlyPrice: string;
   annualPrice: string;
+  monthlyPriceId?: string;
+  annualPriceId?: string;
   currency: "USD" | "EUR";
   description: string;
   features: string[];
@@ -74,7 +76,7 @@ export async function Products(): Promise<PricingData[]> {
       organizationId: process.env.NEXT_PUBLIC_POLAR_ORGANIZATION_ID,
     });
     const products = result.result.items;
-    console.log(products);
+    // console.log(products);
 
     return products.length > 0
       ? mapProductsToPricingData(products)
@@ -86,28 +88,32 @@ export async function Products(): Promise<PricingData[]> {
 }
 
 function mapProductsToPricingData(products: ProductOutput[]): PricingData[] {
-  return products.map((product) => {
-    const monthlyPrice = product.prices.find(
-      (p) => p.recurringInterval === "month"
-    ) as ProductPriceOutput;
-    const annualPrice = product.prices.find(
-      (p) => p.recurringInterval === "year"
-    ) as ProductPriceOutput;
-    return {
-      id: product.id,
-      title: product.name,
-      forType: product.type || "For Everyone",
-      description: product.description || "",
-      monthlyPrice: monthlyPrice
-        ? (monthlyPrice.priceAmount / 100).toString()
-        : "N/A",
-      annualPrice: annualPrice
-        ? (annualPrice.priceAmount / 100).toString()
-        : "N/A",
-      currency: (monthlyPrice?.priceCurrency ||
-        annualPrice?.priceCurrency ||
-        "USD") as "USD" | "EUR",
-      features: product.benefits.map((benefit) => benefit.description),
-    };
-  });
+  return products
+    .filter((product) => product.name !== "Free") // this is a polyfill to ignore the free plan, until you can remove it from products
+    .map((product) => {
+      const monthlyPrice = product.prices.find(
+        (p) => p.recurringInterval === "month"
+      ) as ProductPriceOutput;
+      const annualPrice = product.prices.find(
+        (p) => p.recurringInterval === "year"
+      ) as ProductPriceOutput;
+      return {
+        id: product.id,
+        monthlyPriceId: monthlyPrice.id,
+        annualPriceId: annualPrice.id,
+        title: product.name,
+        forType: product.type || "For Everyone",
+        description: product.description || "",
+        monthlyPrice: monthlyPrice
+          ? (monthlyPrice.priceAmount / 100).toString()
+          : "N/A",
+        annualPrice: annualPrice
+          ? (annualPrice.priceAmount / 100).toString()
+          : "N/A",
+        currency: (monthlyPrice?.priceCurrency ||
+          annualPrice?.priceCurrency ||
+          "USD") as "USD" | "EUR",
+        features: product.benefits.map((benefit) => benefit.description),
+      };
+    });
 }

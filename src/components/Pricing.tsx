@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { PricingData } from "./Products";
+import { checkout } from "@/app/actions/checkout";
 
 export function Pricing({ products }: { products: PricingData[] }) {
   const [isAnnual, setIsAnnual] = useState(false);
@@ -11,7 +12,10 @@ export function Pricing({ products }: { products: PricingData[] }) {
       className="container mx-auto px-4"
       aria-labelledby="pricing-heading"
     >
-      <h2 id="pricing-heading" className="text-3xl font-bold text-center mb-8">
+      <h2
+        id="pricing-heading"
+        className="text-3xl font-bold text-center mb-8 text-gray-950"
+      >
         Pricing
       </h2>
       <div className="flex justify-center mb-8">
@@ -68,6 +72,8 @@ function PriceComponent({
   forType,
   monthlyPrice,
   annualPrice,
+  monthlyPriceId,
+  annualPriceId,
   description,
   features,
   isAnnual,
@@ -130,6 +136,23 @@ function PriceComponent({
             </li>
           ))}
         </ul>
+        <div className="flex flex-col gap-y-4 mt-auto">
+          <form
+            action={() =>
+              checkout({
+                productPriceId: isAnnual ? annualPriceId! : monthlyPriceId!,
+                successUrl: "localhost:3000",
+              })
+            }
+          >
+            <button
+              type="submit"
+              className="hover:bg-primary/90 relative font-normal inline-flex items-center select-none justify-center ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 whitespace-nowrap bg-blue-500 text-white hover:opacity-85 transition-opacity duration-100 h-8 px-4 py-1.5 rounded-full text-sm w-full"
+            >
+              Subscribe
+            </button>
+          </form>
+        </div>
       </div>
     </article>
   );
