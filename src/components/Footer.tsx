@@ -3,17 +3,16 @@ import Link, { LinkProps } from "next/link";
 import { PropsWithChildren } from "react";
 import { twMerge } from "tailwind-merge";
 
-const Footer = ({ wide }: { wide?: boolean }) => {
+const Footer = () => {
   return (
     <div
       className={twMerge(
-        "dark:border-polar-800 dark:bg-polar-950 border-gray-75 flex w-full flex-col items-center space-y-24 border-t bg-white py-24 md:py-32"
+        "dark:border-polar-800 dark:bg-polar-950 border-gray-75 flex w-full flex-col items-center space-y-24 border-t bg-white py-24 md:py-32 max-w-7xl"
       )}
     >
       <div
         className={twMerge(
-          "flex w-full flex-col gap-x-16 gap-y-24 px-8 md:flex-row md:justify-between md:gap-y-12",
-          wide ? "max-w-7xl" : "max-w-[970px]"
+          "flex w-full flex-col gap-x-16 gap-y-24 px-8 md:flex-row md:justify-between md:gap-y-12"
         )}
       >
         <div className="flex flex-col gap-y-6">
@@ -27,7 +26,7 @@ const Footer = ({ wide }: { wide?: boolean }) => {
         <div
           className={twMerge(
             "flex flex-col gap-y-12 md:flex-row",
-            wide ? "gap-x-24 lg:gap-x-32" : "gap-x-20"
+            "gap-x-24 lg:gap-x-32"
           )}
         >
           <div className="flex flex-col gap-y-4">

@@ -1,9 +1,10 @@
 import { PropsWithChildren } from "react";
-import LandingLayout from "@/components/LandingLayout";
 import type { Metadata } from "next";
 import { twMerge } from "tailwind-merge";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Header } from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -17,7 +18,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Next.js Polar starter kit",
+  title: "Polar | Next.js starter kit",
   description: "An easy to use setup for polar.sh with Next.js",
 };
 
@@ -33,7 +34,11 @@ export default function Layout({ children }: PropsWithChildren) {
           `${geistSans.variable} ${geistMono.variable} antialiased`
         )}
       >
-        <LandingLayout>{children}</LandingLayout>
+        <div className="dark:bg-[#0B0C0E] flex w-full flex-col items-center bg-white">
+          <Header />
+          {children}
+          <Footer />
+        </div>
       </body>
     </html>
   );
