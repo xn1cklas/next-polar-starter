@@ -1,9 +1,4 @@
-"use client";
-
 import { Pricing } from "@/components/Pricing";
-
-// import GetStartedButton from "@/components/Auth/GetStartedButton";
-// import Button from "@/components/ui/atoms/button";
 
 export default function Page() {
   return (
