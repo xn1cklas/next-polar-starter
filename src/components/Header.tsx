@@ -1,6 +1,6 @@
 import { BrandingMenu } from "@/components/BrandingMenu";
 import Link from "next/link";
-import Button from "@/components/ui/atoms/button";
+import { Button } from "@/components/Button";
 
 export const Header = () => {
   return (
