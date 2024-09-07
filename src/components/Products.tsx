@@ -32,13 +32,49 @@ export const mockPricingData: PricingData[] = [
       "Binary Downloads",
     ],
   },
-  // ... (keep other mock data, update currency if needed)
+  {
+    id: "pro",
+    title: "Pro Plan",
+    forType: "For Teams",
+    monthlyPrice: "29",
+    annualPrice: "290",
+    currency: "USD",
+    description:
+      "Upgrade to Pro for advanced features and priority support. Ideal for growing teams and businesses.",
+    features: [
+      "Everything in Basic",
+      "Team Collaboration Tools",
+      "Advanced Analytics",
+      "Priority Support",
+      "Custom Integrations",
+    ],
+  },
+  {
+    id: "enterprise",
+    title: "Enterprise",
+    forType: "For Large Organizations",
+    monthlyPrice: "Custom",
+    annualPrice: "Custom",
+    currency: "USD",
+    description:
+      "Tailored solutions for large-scale deployments with dedicated support and custom features.",
+    features: [
+      "Everything in Pro",
+      "Dedicated Account Manager",
+      "On-premise Deployment Option",
+      "Custom SLA",
+      "Advanced Security Features",
+    ],
+  },
 ];
 
 export async function Products(): Promise<PricingData[]> {
   try {
-    const result = await polar.products.list({ organizationId: "nsquare" });
+    const result = await polar.products.list({
+      organizationId: process.env.NEXT_PUBLIC_POLAR_ORGANIZATION_ID,
+    });
     const products = result.result.items;
+    console.log(products);
 
     return products.length > 0
       ? mapProductsToPricingData(products)
