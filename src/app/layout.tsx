@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import LandingLayout from "@/components/Landing/LandingLayout";
+import LandingLayout from "@/components/LandingLayout";
 import type { Metadata } from "next";
 import { twMerge } from "tailwind-merge";
 import localFont from "next/font/local";

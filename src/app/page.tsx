@@ -1,6 +1,7 @@
 "use client";
 
-import { Section } from "@/components/Landing/Section";
+import { Section } from "@/components/Section";
+import { Pricing } from "@/components/Pricing";
 
 // import GetStartedButton from "@/components/Auth/GetStartedButton";
 // import Button from "@/components/ui/atoms/button";
@@ -36,6 +37,9 @@ export default function Page() {
             <div className="z-20 flex flex-row items-center gap-x-4"></div>
           </div>
         </div>
+      </Section>
+      <Section>
+        <Pricing />
       </Section>
     </div>
   );

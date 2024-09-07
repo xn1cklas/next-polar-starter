@@ -1,22 +1,14 @@
 "use client";
 
-import { Section } from "@/components/Landing/Section";
-import { TopbarNavigation } from "@/components/Landing/TopbarNavigation";
-import { BrandingMenu } from "@/components/Layout/Public/BrandingMenu";
-import Footer from "@/components/Organization/Footer";
-// import { motion } from "framer-motion";
+import { Section } from "@/components/Section";
+import { TopbarNavigation } from "@/components/TopbarNavigation";
+import { BrandingMenu } from "@/components/BrandingMenu";
+import Footer from "@/components/Footer";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import Button from "@/components/ui/atoms/button";
-import { PropsWithChildren, useEffect } from "react";
+import { PropsWithChildren } from "react";
 
 export default function Layout({ children }: PropsWithChildren) {
-  const pathname = usePathname();
-
-  useEffect(() => {
-    window.scroll(0, 0);
-  }, [pathname]);
-
   return (
     <div className="dark:bg-[#0B0C0E] flex w-full flex-col items-center bg-white">
       <Section
