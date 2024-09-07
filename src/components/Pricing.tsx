@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "./Button";
 
 export function Pricing() {
   const [isAnnual, setIsAnnual] = useState(false);
@@ -11,20 +10,26 @@ export function Pricing() {
       <h1 className="text-3xl font-bold text-center mb-8">Pricing</h1>
       <div className="flex justify-center mb-8">
         <div className="inline-flex rounded-md shadow-sm" role="group">
-          <Button
-            variant={isAnnual ? "outline" : "default"}
-            className="rounded-r-none"
+          <button
+            className={`inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-8 px-4 py-1.5 rounded-r-none ${
+              isAnnual
+                ? "text-blue-500 dark:text-polar-200 hover:bg-blue-50 dark:bg-transparent dark:hover:bg-polar-700 border-transparent hover:border-blue-100 border dark:border-polar-700 bg-transparent border-blue-100"
+                : "bg-blue-500 text-white hover:opacity-85 transition-opacity duration-100"
+            }`}
             onClick={() => setIsAnnual(false)}
           >
             Monthly
-          </Button>
-          <Button
-            variant={isAnnual ? "default" : "outline"}
-            className="rounded-l-none"
+          </button>
+          <button
+            className={`inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-8 px-4 py-1.5 rounded-l-none ${
+              isAnnual
+                ? "bg-blue-500 text-white hover:opacity-85 transition-opacity duration-100"
+                : "text-blue-500 dark:text-polar-200 hover:bg-blue-50 dark:bg-transparent dark:hover:bg-polar-700 border-transparent hover:border-blue-100 border dark:border-polar-700 bg-transparent border-blue-100"
+            }`}
             onClick={() => setIsAnnual(true)}
           >
             Annual
-          </Button>
+          </button>
         </div>
       </div>
       <div className="flex flex-col md:flex-row gap-8 w-full mx-auto">
