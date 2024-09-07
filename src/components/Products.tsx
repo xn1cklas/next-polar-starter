@@ -92,9 +92,11 @@ function mapProductsToPricingData(products: ProductOutput[]): PricingData[] {
     .filter((product) => product.name !== "Free") // this is a polyfill to ignore the free plan, until you can remove it from products
     .map((product) => {
       const monthlyPrice = product.prices.find(
+        //@ts-expect-error there seems to be a type issue for recurringInterval
         (p) => p.recurringInterval === "month"
       ) as ProductPriceOutput;
       const annualPrice = product.prices.find(
+        //@ts-expect-error there seems to be a type issue for recurringInterval
         (p) => p.recurringInterval === "year"
       ) as ProductPriceOutput;
       return {
