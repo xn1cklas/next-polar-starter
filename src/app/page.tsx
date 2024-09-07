@@ -1,6 +1,9 @@
 import { Pricing } from "@/components/Pricing";
+import { Products } from "@/components/Products";
 
-export default function Page() {
+export default async function Page() {
+  const products = await Products();
+
   return (
     <div className="flex w-full flex-col items-center max-w-[100vw] md:max-w-7xl ">
       <section className="flex flex-col gap-y-24 md:pt-24">
@@ -33,7 +36,7 @@ export default function Page() {
         </div>
       </section>
       <section className="relative flex w-full flex-col items-center justify-stretch dark:bg-black">
-        <Pricing />
+        <Pricing products={products} />
       </section>
     </div>
   );
