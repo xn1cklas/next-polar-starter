@@ -1,6 +1,14 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app) with a basic [polar](https://polar.sh) setup, supporting loading products and creating a checkout.
+
+Created by N1cklas.
+
+Follow me on [X](https://x.com/xn1cklas)
 
 ## Getting Started
+
+### Setup your environment variables. 
+
+You need a `Personal Access Tokens` that you can create in your polar dashboard, as well as your organization id.
 
 First, run the development server:
 
@@ -28,6 +36,10 @@ To learn more about Next.js, take a look at the following resources:
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+### The Polar sdk
+
+To learn more about the powerful polar sdk follow the [docs](https://docs.polar.sh/api/sdk#sdk)
 
 ## Deploy on Vercel
 
