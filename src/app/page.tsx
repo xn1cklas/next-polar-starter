@@ -1,6 +1,5 @@
 "use client";
 
-import { Section } from "@/components/Section";
 import { Pricing } from "@/components/Pricing";
 
 // import GetStartedButton from "@/components/Auth/GetStartedButton";
@@ -8,8 +7,8 @@ import { Pricing } from "@/components/Pricing";
 
 export default function Page() {
   return (
-    <div className="flex w-full flex-col items-center">
-      <Section className="flex flex-col gap-y-24 md:py-24">
+    <div className="flex w-full flex-col items-center max-w-[100vw] md:max-w-7xl ">
+      <section className="flex flex-col gap-y-24 md:pt-24">
         <div className="flex w-full flex-col items-center gap-24 md:pb-16">
           <div className="relative z-20 flex w-full flex-col items-center gap-y-12 text-center">
             <a
@@ -37,10 +36,10 @@ export default function Page() {
             <div className="z-20 flex flex-row items-center gap-x-4"></div>
           </div>
         </div>
-      </Section>
-      <Section>
+      </section>
+      <section className="relative flex w-full flex-col items-center justify-stretch dark:bg-black">
         <Pricing />
-      </Section>
+      </section>
     </div>
   );
 }
