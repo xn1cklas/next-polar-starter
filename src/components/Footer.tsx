@@ -5,7 +5,7 @@ import { twMerge } from "tailwind-merge";
 
 const Footer = () => {
   return (
-    <div
+    <footer
       className={twMerge(
         "dark:border-polar-800 dark:bg-polar-950 border-gray-75 flex w-full flex-col items-center space-y-24 border-t bg-white py-24 md:py-32 max-w-7xl"
       )}
@@ -23,7 +23,7 @@ const Footer = () => {
             &copy; Polar Software Inc. {new Date().getFullYear()}
           </span>
         </div>
-        <div
+        <nav
           className={twMerge(
             "flex flex-col gap-y-12 md:flex-row",
             "gap-x-24 lg:gap-x-32"
@@ -87,9 +87,9 @@ const Footer = () => {
               <FooterLink href="mailto:support@polar.sh">Contact</FooterLink>
             </div>
           </div>
-        </div>
+        </nav>
       </div>
-    </div>
+    </footer>
   );
 };
 

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const Header = () => {
   return (
-    <div className="w-full max-w-[100vw]  px-4  md:max-w-7xl md:px-12  dark:bg-blac py-4 md:py-8 sticky top-0 z-30 dark:bg-[#0B0C0E] bg-white flex flex-row items-center justify-between bg-transparent">
+    <header className="w-full max-w-[100vw] px-4 md:max-w-7xl md:px-12 dark:bg-blac py-4 md:py-8 sticky top-0 z-30 dark:bg-[#0B0C0E] bg-white flex flex-row items-center justify-between bg-transparent">
       <TopbarNavigation />
       <BrandingMenu
         className="mt-1 hidden md:block"
@@ -22,13 +22,16 @@ export const Header = () => {
           </button>
         </Link>
       </div>
-    </div>
+    </header>
   );
 };
 
 const TopbarNavigation = () => {
   return (
-    <nav className="absolute left-1/2 hidden -translate-x-1/2 flex-row items-center gap-x-4 text-sm md:flex">
+    <nav
+      className="absolute left-1/2 hidden -translate-x-1/2 flex-row items-center gap-x-4 text-sm md:flex"
+      aria-label="Main navigation"
+    >
       <Link
         className="dark:hover:bg-polar-800 rounded-full px-4 py-2 hover:bg-gray-100"
         href="/#pricing"

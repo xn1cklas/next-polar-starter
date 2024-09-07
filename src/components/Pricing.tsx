@@ -7,11 +7,23 @@ export function Pricing({ products }: { products: PricingData[] }) {
   const [isAnnual, setIsAnnual] = useState(false);
 
   return (
-    <div className="container mx-auto px-4">
-      <h1 className="text-3xl font-bold text-center mb-8">Pricing</h1>
+    <section
+      className="container mx-auto px-4"
+      aria-labelledby="pricing-heading"
+    >
+      <h2 id="pricing-heading" className="text-3xl font-bold text-center mb-8">
+        Pricing
+      </h2>
       <div className="flex justify-center mb-8">
-        <div className="inline-flex rounded-md shadow-sm" role="group">
+        <fieldset
+          className="inline-flex rounded-md shadow-sm"
+          role="radiogroup"
+          aria-label="Billing frequency"
+        >
+          <legend className="sr-only">Choose billing frequency</legend>
           <button
+            role="radio"
+            aria-checked={!isAnnual}
             className={`inline-flex items-center justify-center whitespace-nowrap rounded-l-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-8 px-4 py-1.5 ${
               isAnnual
                 ? "bg-white text-blue-500 border border-blue-500"
@@ -22,6 +34,8 @@ export function Pricing({ products }: { products: PricingData[] }) {
             Monthly
           </button>
           <button
+            role="radio"
+            aria-checked={isAnnual}
             className={`inline-flex items-center justify-center whitespace-nowrap rounded-r-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-8 px-4 py-1.5 ${
               isAnnual
                 ? "bg-blue-500 text-white"
@@ -31,7 +45,7 @@ export function Pricing({ products }: { products: PricingData[] }) {
           >
             Annual
           </button>
-        </div>
+        </fieldset>
       </div>
       <div className="flex flex-col md:flex-row gap-8 w-full mx-auto">
         {products.map((plan) => (
@@ -40,7 +54,7 @@ export function Pricing({ products }: { products: PricingData[] }) {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -65,11 +79,8 @@ function PriceComponent({
   const currencySymbol = currency === "EUR" ? "€" : "$";
 
   return (
-    <div className="flex h-full flex-col">
-      <div
-        className="border bg-white text-gray-950 shadow-none dark:text-white dark:bg-polar-900 rounded-4xl relative flex flex-col gap-y-6 overflow-hidden border-none hover:bg-gray-50 p-8 min-h-[400px] h-full"
-        id={id}
-      >
+    <article className="flex h-full flex-col" aria-labelledby={`plan-${id}`}>
+      <div className="border bg-white text-gray-950 shadow-none dark:text-white dark:bg-polar-900 rounded-4xl relative flex flex-col gap-y-6 overflow-hidden border-none hover:bg-gray-50 p-8 min-h-[400px] h-full">
         <div className="flex flex-col space-y-1.5 grow gap-y-6 p-0">
           <div className="flex flex-col gap-y-4">
             <div className="flex flex-row items-center justify-between">
@@ -78,12 +89,21 @@ function PriceComponent({
               </span>
             </div>
             <div className="flex justify-between">
-              <h3 className="truncate font-medium text-lg">{title}</h3>
+              <h3 id={`plan-${id}`} className="truncate font-medium text-lg">
+                {title}
+              </h3>
             </div>
           </div>
           <div className="flex flex-col gap-y-8 text-[--var-fg-color] dark:text-[--var-dark-fg-color]">
-            <div className="text-5xl !font-[200]">
-              {price !== "Custom" ? `${currencySymbol}${price}` : price}
+            <div
+              className="text-5xl !font-[200]"
+              aria-label={`Price: ${
+                price !== "Custom"
+                  ? `${currencySymbol}${price}${period}`
+                  : price
+              }`}
+            >
+              {price !== "Custom" ? `${currencySymbol} ${price}` : price}
               <span className="dark:text-polar-500 ml-2 text-xl font-normal text-gray-500">
                 {price !== "Custom" ? period : ""}
               </span>
@@ -93,26 +113,25 @@ function PriceComponent({
             </div>
           </div>
         </div>
-        <div
-          data-orientation="horizontal"
-          role="none"
-          className="shrink-0 h-[1px] w-full dark:bg-polar-700 bg-gray-200"
-        ></div>
-        <div className="flex h-full grow flex-col gap-y-2 p-0">
+        <hr className="shrink-0 h-[1px] w-full dark:bg-polar-700 bg-gray-200" />
+        <ul className="flex h-full grow flex-col gap-y-2 p-0 list-none">
           {features.map((feature, index) => (
-            <div
+            <li
               key={index}
               className="flex flex-row items-start text-[--var-fg-color] dark:text-[--var-dark-fg-color]"
             >
-              <span className="flex h-6 w-6 shrink-0 flex-row items-center justify-center rounded-full bg-[--var-border-color] text-[14px] dark:bg-[--var-dark-border-color]">
+              <span
+                className="flex h-6 w-6 shrink-0 flex-row items-center justify-center rounded-full bg-[--var-border-color] text-[14px] dark:bg-[--var-dark-border-color]"
+                aria-hidden="true"
+              >
                 <CheckIcon />
               </span>
               <span className="ml-3 text-sm leading-relaxed">{feature}</span>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
-    </div>
+    </article>
   );
 }
 
@@ -129,6 +148,7 @@ const CheckIcon = () => {
       strokeLinecap="round"
       strokeLinejoin="round"
       className="lucide lucide-check"
+      aria-hidden="true"
     >
       <path d="M20 6 9 17l-5-5" />
     </svg>

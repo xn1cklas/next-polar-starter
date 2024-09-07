@@ -5,24 +5,31 @@ export default async function Page() {
   const products = await Products();
 
   return (
-    <div className="flex w-full flex-col items-center max-w-[100vw] md:max-w-7xl ">
-      <section className="flex flex-col gap-y-24 md:pt-24">
+    <div className="flex w-full flex-col items-center max-w-[100vw] md:max-w-7xl">
+      <section
+        className="flex flex-col gap-y-24 md:pt-24"
+        aria-labelledby="hero-heading"
+      >
         <div className="flex w-full flex-col items-center gap-24 md:pb-16">
           <div className="relative z-20 flex w-full flex-col items-center gap-y-12 text-center">
             <a
               href="https://www.producthunt.com/posts/polar-5?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-polar&#0045;5"
               target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Polar on Product Hunt"
             >
               <img
                 src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=484271&theme=dark"
-                alt="Polar - An&#0032;open&#0032;source&#0032;monetization&#0032;platform&#0032;for&#0032;developers | Product Hunt"
-                style={{ width: "250px", height: "54px" }}
+                alt="Polar - An open source monetization platform for developers | Product Hunt"
                 width="250"
                 height="54"
               />
             </a>
             <div className="z-20 flex flex-col items-center gap-y-8">
-              <h1 className="text-balance text-5xl !leading-tight text-gray-950 md:text-7xl dark:text-white">
+              <h1
+                id="hero-heading"
+                className="text-balance text-5xl !leading-tight text-gray-950 md:text-7xl dark:text-white"
+              >
                 Next.js Polar starter kit
               </h1>
               <div className="flex flex-col items-center gap-y-4 xl:w-2/3">
