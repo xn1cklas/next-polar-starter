@@ -89,15 +89,15 @@ function Warning() {
           </svg>
         </div>
         <div className="ml-3">
-          <p className="text-sm text-yellow-700 mb-2">
+          <h3 className="text-sm text-yellow-700 mb-2">
             No products found. This could be caused by one of the following:
-          </p>
-          <ul className="pl-5 list-disc text-sm text-yellow-700">
+          </h3>
+          <ul role="list" className="list-disc space-y-1 pl-5  text-yellow-700">
             <li>
               Your Polar dashboard is empty.{" "}
               <Link
                 href="https://polar.sh/dashboard"
-                className="font-medium text-yellow-700 underline hover:text-yellow-600"
+                className="font-medium underline hover:text-yellow-600"
               >
                 Create a product in the Polar dashboard
               </Link>
