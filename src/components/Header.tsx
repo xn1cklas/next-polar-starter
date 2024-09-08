@@ -1,4 +1,4 @@
-import { BrandingMenu } from "@/components/BrandingMenu";
+import { BrandingMenu } from "@/components/Brand/BrandingMenu";
 import Link from "next/link";
 
 export const Header = () => {

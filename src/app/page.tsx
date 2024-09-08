@@ -1,4 +1,4 @@
-import { fetchProducts } from "@/components/fetch-products";
+import { fetchProducts } from "@/lib/fetch-products";
 import { Pricing } from "@/components/Pricing";
 
 export default async function Page() {

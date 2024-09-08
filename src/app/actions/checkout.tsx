@@ -1,24 +1,23 @@
 "use server";
 
-import { polar } from "@/utils/polar-client";
+import { polar } from "@/lib/polar/polar-client";
 import { redirect } from "next/navigation";
+import { productConfig } from "@/lib/config";
 
 export async function checkout({
   productPriceId,
-  successUrl,
 }: {
   productPriceId: string | undefined;
-  successUrl: string;
 }) {
   "use server";
 
   if (!productPriceId) {
-    redirect(successUrl);
+    redirect(productConfig.successUrl);
   }
 
   const result = await polar.checkouts.create({
     productPriceId: productPriceId,
-    successUrl: successUrl,
+    successUrl: productConfig.successUrl,
   });
 
   if (result.url) {

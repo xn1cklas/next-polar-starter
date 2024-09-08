@@ -213,7 +213,6 @@ function ProductCard({
             action={() =>
               checkout({
                 productPriceId: priceId,
-                successUrl: "localhost:3000",
               })
             }
           >

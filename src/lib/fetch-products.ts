@@ -1,4 +1,4 @@
-import { polar } from "@/utils/polar-client";
+import { polar } from "@/lib/polar/polar-client";
 import { ProductOutput } from "@polar-sh/sdk/models/components";
 
 export async function fetchProducts(): Promise<ProductOutput[]> {
