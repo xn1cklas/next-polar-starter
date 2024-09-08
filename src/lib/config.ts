@@ -1,3 +1,3 @@
 export const productConfig = {
-  successUrl: "localhost:3000",
+  successUrl: "http://localhost:3000",
 };
