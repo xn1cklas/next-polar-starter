@@ -1,8 +1,19 @@
+# Next.js Polar subscriptions starter
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app) with a basic [polar](https://polar.sh) setup, supporting loading products and creating a checkout.
 
 Created by N1cklas.
 
 Follow me on [X](https://x.com/xn1cklas)
+
+## Features
+
+- Fetch products, benefits and prices from your polar organization using the polar sdk
+- Create checkout for each product
+
+## Demo
+
+[![Screenshot of demo](./public/demo.png)](https://next-polar-starter.vercel.app/)
 
 ## Getting Started
 
