@@ -1,8 +1,8 @@
+import { fetchProducts } from "@/components/fetch-products";
 import { Pricing } from "@/components/Pricing";
-import { Products } from "@/components/Products";
 
 export default async function Page() {
-  const products = await Products();
+  const products = await fetchProducts();
 
   return (
     <div className="flex w-full flex-col items-center max-w-[100vw] md:max-w-7xl">
