@@ -1,7 +1,7 @@
-import { polar } from "@/utils/PolarClient";
+import { polar } from "@/utils/polar-client";
 import { ProductOutput } from "@polar-sh/sdk/models/components";
 
-export async function Products(): Promise<ProductOutput[]> {
+export async function fetchProducts(): Promise<ProductOutput[]> {
   try {
     const result = await polar.products.list({
       organizationId: process.env.NEXT_PUBLIC_POLAR_ORGANIZATION_ID,
