@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { checkout } from "@/app/actions/checkout";
 import { ProductOutput } from "@polar-sh/sdk/models/components";
+import Link from "next/link";
 
 export function Pricing({ products }: { products: ProductOutput[] }) {
   const [isAnnual, setIsAnnual] = useState(false);
@@ -52,6 +53,8 @@ export function Pricing({ products }: { products: ProductOutput[] }) {
         </fieldset>
       </div>
       <div className="flex flex-col md:flex-row gap-8 w-full mx-auto">
+        {products.length === 0 && <Warning />}
+
         {products.map((plan) => (
           <div key={plan.id} className="flex-1 w-full md:w-auto">
             <ProductCard product={plan} isAnnual={isAnnual} />
@@ -59,6 +62,51 @@ export function Pricing({ products }: { products: ProductOutput[] }) {
         ))}
       </div>
     </section>
+  );
+}
+
+function Warning() {
+  return (
+    <div className="border-l-4 border-yellow-400 bg-yellow-50 p-4 mx-auto mb-8">
+      <div className="flex">
+        <div className="flex-shrink-0">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            className="h-5 w-5 text-yellow-400"
+            aria-hidden="true"
+          >
+            <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" />
+            <path d="M12 9v4" />
+            <path d="M12 17h.01" />
+          </svg>
+        </div>
+        <div className="ml-3">
+          <p className="text-sm text-yellow-700 mb-2">
+            No products found. This could be caused by one of the following:
+          </p>
+          <ul className="pl-5 list-disc text-sm text-yellow-700">
+            <li>
+              Your Polar dashboard is empty.{" "}
+              <Link
+                href="https://polar.sh/dashboard"
+                className="font-medium text-yellow-700 underline hover:text-yellow-600"
+              >
+                Create a product in the Polar dashboard
+              </Link>
+            </li>
+            <li>Your environment variables are not set correctly</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   );
 }
 
