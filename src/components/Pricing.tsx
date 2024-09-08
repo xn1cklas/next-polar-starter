@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { PricingData } from "./Products";
+import { useState, useEffect } from "react";
 import { checkout } from "@/app/actions/checkout";
+import { ProductOutput } from "@polar-sh/sdk/models/components";
 
-export function Pricing({ products }: { products: PricingData[] }) {
+export function Pricing({ products }: { products: ProductOutput[] }) {
   const [isAnnual, setIsAnnual] = useState(false);
 
   return (
@@ -54,7 +54,7 @@ export function Pricing({ products }: { products: PricingData[] }) {
       <div className="flex flex-col md:flex-row gap-8 w-full mx-auto">
         {products.map((plan) => (
           <div key={plan.id} className="flex-1 w-full md:w-auto">
-            <PriceComponent {...plan} isAnnual={isAnnual} />
+            <ProductCard product={plan} isAnnual={isAnnual} />
           </div>
         ))}
       </div>
@@ -62,66 +62,88 @@ export function Pricing({ products }: { products: PricingData[] }) {
   );
 }
 
-interface PriceComponentProps extends PricingData {
-  isAnnual: boolean;
-}
-
-function PriceComponent({
-  id,
-  title,
-  forType,
-  monthlyPrice,
-  annualPrice,
-  monthlyPriceId,
-  annualPriceId,
-  description,
-  features,
+function ProductCard({
+  product,
   isAnnual,
-  currency,
-}: PriceComponentProps) {
-  const price = isAnnual ? annualPrice : monthlyPrice;
-  const period = isAnnual ? "/year" : "/mo";
+}: {
+  product: ProductOutput;
+  isAnnual: boolean;
+}) {
+  const [price, setPrice] = useState<string>("N/A");
+  const [priceId, setPriceId] = useState<string | undefined>(undefined);
+  const [period, setPeriod] = useState<string>("/mo");
+  const [isFree, setIsFree] = useState<boolean>(false);
 
-  const currencySymbol = currency === "EUR" ? "€" : "$";
+  useEffect(() => {
+    const selectedPrice = product.prices.find(
+      (p) =>
+        p.type === "recurring" &&
+        p.recurringInterval === (isAnnual ? "year" : "month")
+    );
+
+    if (selectedPrice && selectedPrice.priceAmount > 0) {
+      setPrice((selectedPrice.priceAmount / 100).toString());
+      setPriceId(selectedPrice.id);
+      setPeriod(isAnnual ? "/year" : "/mo");
+      setIsFree(false);
+    } else {
+      setPrice("Free");
+      setPriceId(undefined);
+      setPeriod("");
+      setIsFree(true);
+    }
+  }, [product, isAnnual]);
+
+  const currencySymbol = product.prices[0]?.priceCurrency === "EUR" ? "€" : "$";
 
   return (
-    <article className="flex h-full flex-col" aria-labelledby={`plan-${id}`}>
+    <article
+      className="flex h-full flex-col"
+      aria-labelledby={`plan-${product.id}`}
+    >
       <div className="border bg-white text-gray-950 shadow-none dark:text-white dark:bg-polar-900 rounded-4xl relative flex flex-col gap-y-6 overflow-hidden border-none hover:bg-gray-50 p-8 min-h-[400px] h-full">
         <div className="flex flex-col space-y-1.5 grow gap-y-6 p-0">
           <div className="flex flex-col gap-y-4">
             <div className="flex flex-row items-center justify-between">
               <span className="dark:text-polar-500 text-xs text-gray-500">
-                {forType}
+                {product.type || "For Everyone"}
               </span>
             </div>
             <div className="flex justify-between">
-              <h3 id={`plan-${id}`} className="truncate font-medium text-lg">
-                {title}
+              <h3
+                id={`plan-${product.id}`}
+                className="truncate font-medium text-lg"
+              >
+                {product.name}
               </h3>
             </div>
           </div>
           <div className="flex flex-col gap-y-8 text-[--var-fg-color] dark:text-[--var-dark-fg-color]">
             <div
               className="text-5xl !font-[200]"
-              aria-label={`Price: ${
-                price !== "Custom"
-                  ? `${currencySymbol}${price}${period}`
-                  : price
-              }`}
+              aria-label={
+                isFree ? "Free" : `Price: ${currencySymbol}${price}${period}`
+              }
             >
-              {price !== "Custom" ? `${currencySymbol} ${price}` : price}
-              <span className="dark:text-polar-500 ml-2 text-xl font-normal text-gray-500">
-                {price !== "Custom" ? period : ""}
-              </span>
+              {isFree ? (
+                "Free"
+              ) : (
+                <>
+                  {currencySymbol} {price}
+                  <span className="dark:text-polar-500 ml-2 text-xl font-normal text-gray-500">
+                    {period}
+                  </span>
+                </>
+              )}
             </div>
             <div className="text-sm prose dark:prose-invert prose-headings:mt-8 prose-headings:font-semibold prose-headings:text-black prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-h4:text-lg prose-h5:text-md prose-h6:text-sm dark:prose-headings:text-polar-50 dark:text-polar-300 max-h-64 max-w-4xl overflow-hidden text-gray-800">
-              <p>{description}</p>
+              <p>{product.description}</p>
             </div>
           </div>
         </div>
         <hr className="shrink-0 h-[1px] w-full dark:bg-polar-700 bg-gray-200" />
         <ul className="flex h-full grow flex-col gap-y-2 p-0 list-none">
-          {features.map((feature, index) => (
+          {product.benefits.map((benefit, index) => (
             <li
               key={index}
               className="flex flex-row items-start text-[--var-fg-color] dark:text-[--var-dark-fg-color]"
@@ -132,7 +154,9 @@ function PriceComponent({
               >
                 <CheckIcon />
               </span>
-              <span className="ml-3 text-sm leading-relaxed">{feature}</span>
+              <span className="ml-3 text-sm leading-relaxed">
+                {benefit.description}
+              </span>
             </li>
           ))}
         </ul>
@@ -140,7 +164,7 @@ function PriceComponent({
           <form
             action={() =>
               checkout({
-                productPriceId: isAnnual ? annualPriceId! : monthlyPriceId!,
+                productPriceId: priceId,
                 successUrl: "localhost:3000",
               })
             }
