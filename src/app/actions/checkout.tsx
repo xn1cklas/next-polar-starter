@@ -11,16 +11,23 @@ export async function checkout({
 }) {
   "use server";
 
+  let result = null;
+
   if (!productPriceId) {
     redirect(productConfig.successUrl);
   }
-
-  const result = await polar.checkouts.create({
-    productPriceId: productPriceId,
-    successUrl: productConfig.successUrl,
-  });
-
-  if (result.url) {
-    redirect(result.url);
+  try {
+    result = await polar.checkouts.create({
+      productPriceId: productPriceId,
+      successUrl: productConfig.successUrl,
+    });
+  } catch (error) {
+    console.error("Checkout error:", error);
+  } finally {
+    if (result?.url) {
+      redirect(result.url);
+    } else {
+      redirect(productConfig.successUrl);
+    }
   }
 }
